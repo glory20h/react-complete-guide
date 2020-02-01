@@ -4,37 +4,10 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
-  // const [ this.state, setthis.state ] = useState({
-  //   persons: [
-  //     { name: 'Max', age: 28 },
-  //     { name: 'Manu', age: 29 },
-  //     { name: 'Stephanie', age: 26 }
-  //   ]
-  // });
-
-  // const [otherState, setOtherState] = useState('some other value')
-
-  // const switchNameHandler = () => {
-  //   // console.log('Was clicked!')
-  //   setthis.state({
-  //     persons: [
-  //       { name: 'Maximilian', age: 28 },
-  //       { name: 'Manu', age: 29 },
-  //       { name: 'Stephanie', age: 16 }
-  //     ] 
-  //   })
-  // }
-
-  // return (
-  //   <div className="App">
-  //     <h1>Hi, I'm a React App</h1>
-  //     <p>This is really working!</p>
-  //     <button onClick={switchNameHandler}>Switch Name</button>
-  //     <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-  //     <Person name={this.state.persons[1].name} age={this.state.persons[1].age} >My Hobbies: Racing</Person>
-  //     <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
-  //   </div>
-  // );  
+  constructor(props) {
+    super(props);
+    console.log('[App.js] constructor');
+  }
   
   state = {
     persons: [
@@ -44,7 +17,25 @@ class App extends Component {
     ],
     otherState: 'some other value',
     showPersons: false
-  } 
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('[App.js] getDerivedStateFromProps', props);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('[App.js] componentDidMount');
+  }
+
+  shouldComponentUpdate() {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate');
+  }
 
   switchNameHandler = (newName) => {
     this.setState({
@@ -88,6 +79,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('[App.js] render');
     let persons = null;
 
     if (this.state.showPersons) {
@@ -101,6 +93,7 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <Cockpit 
+          title={this.props.appTitle}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           clicked={this.togglePersonsHandler}
