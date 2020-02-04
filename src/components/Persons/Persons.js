@@ -1,43 +1,55 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import Person from './Person/Person';
 
-class Persons extends Component {
-    // static getDerivedStateFromProps(props, state) {
-    //     console.log('[Persons.js] getDerivedStateFromProps');
-    //     return state;
-    // }
+class Persons extends PureComponent {
+  // static getDerivedStateFromProps(props, state) {
+  //     console.log('[Persons.js] getDerivedStateFromProps');
+  //     return state;
+  // }
 
-    componentWillReceiveProps(props) {
-        console.log('[Persons.js] componentWillReceiveProps', props);
-    }
+  // componentWillReceiveProps(props) {
+  //     console.log('[Persons.js] componentWillReceiveProps', props);
+  // }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        console.log('[Persons.js] shouldComponentUpdate');
-        return true;
-    }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //     console.log('[Persons.js] shouldComponentUpdate');
+  //     if (nextProps.persons !== this.props.persons) {
+  //         return true;
+  //     } else {
+  //         return false;
+  //     }
+  // }
 
-    getSnapshotBeforeUpdate(prevProps, prevState) {
-        console.log('[Persons.js] getSnapshotBeforeUpdate');
-        return {message: 'Snapshot!'};
-    }
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('[Persons.js] getSnapshotBeforeUpdate');
+    return { message: 'Snapshot!' };
+  }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('[Persons.js componentDidUpdate');
-        console.log(snapshot);
-    }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('[Persons.js componentDidUpdate');
+    console.log(snapshot);
+  }
 
-    render() {
-        console.log('[Persons.js] rendering...');
-        return this.props.persons.map((person, index) => {
-            return <Person 
-                click={() => this.props.clicked(index)}
-                name={person.name}
-                age={person.age}
-                key={person.id}
-                changed={(event) => this.props.changed(event, person.id)} />
-        });
-    }
+  componentWillUnmount() {
+    console.log('[Persons.js] componentWillUnmount');
+  }
+
+  render() {
+    console.log('[Persons.js] rendering...');
+    return this.props.persons.map((person, index) => {
+      return (
+        <Person
+          click={() => this.props.clicked(index)}
+          name={person.name}
+          age={person.age}
+          key={person.id}
+          changed={(event) => this.props.changed(event, person.id)}
+          isAuth={this.props.isAuthenticated}
+        />
+      )
+    })
+  }
 }
 
 export default Persons;
